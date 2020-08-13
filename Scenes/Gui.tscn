@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Fonts/joystix monospace.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Scenes/GuiScript.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/EndLevel.tscn" type="PackedScene" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="DynamicFont" id=4]
+size = 32
+font_data = ExtResource( 1 )
+
+[node name="GUI" type="CanvasLayer"]
+follow_viewport_enable = true
+script = ExtResource( 2 )
+
+[node name="PopupCtrl" parent="." instance=ExtResource( 3 )]
+rect_pivot_offset = Vector2( 0, 0 )
+
+[node name="GameGui" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameGui"]
+margin_right = 1880.0
+margin_bottom = 1040.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameGui/VBoxContainer"]
+margin_right = 1880.0
+margin_bottom = 45.0
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="TimeLabel" type="Label" parent="GameGui/VBoxContainer/HBoxContainer"]
+margin_top = 3.0
+margin_right = 876.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
+text = "TIme"
+
+[node name="CountLabel" type="Label" parent="GameGui/VBoxContainer/HBoxContainer"]
+margin_left = 880.0
+margin_top = 3.0
+margin_right = 1756.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 2 )
+text = "Count"
+
+[node name="MenuBut" type="Button" parent="GameGui/VBoxContainer/HBoxContainer"]
+margin_left = 1760.0
+margin_right = 1880.0
+margin_bottom = 45.0
+custom_styles/focus = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+text = "MENU"
+flat = true
+[connection signal="pressed" from="GameGui/VBoxContainer/HBoxContainer/MenuBut" to="." method="_on_MenuBut_pressed"]

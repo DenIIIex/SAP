@@ -1,0 +1,99 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Fonts/main_button_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Script/EndLevel.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[node name="PopupCtrl" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 640, 512 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0, 0, 0, 0.6 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 100.0
+margin_top = 250.0
+margin_right = 1820.0
+margin_bottom = 830.0
+custom_constants/separation = 50
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Time" type="Label" parent="VBoxContainer"]
+margin_right = 1720.0
+margin_bottom = 132.0
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 1 )
+text = "TIME  22:11"
+align = 1
+valign = 1
+
+[node name="Count" type="Label" parent="VBoxContainer"]
+margin_top = 182.0
+margin_right = 1720.0
+margin_bottom = 314.0
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 1 )
+text = "Count  99"
+align = 1
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 364.0
+margin_right = 1720.0
+margin_bottom = 447.0
+size_flags_horizontal = 5
+size_flags_vertical = 5
+
+[node name="RestartBut" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_right = 858.0
+margin_bottom = 83.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+size_flags_stretch_ratio = 0.5
+custom_styles/focus = SubResource( 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "RESTART"
+flat = true
+
+[node name="NextBut" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 862.0
+margin_right = 1720.0
+margin_bottom = 83.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+custom_styles/focus = SubResource( 2 )
+custom_fonts/font = ExtResource( 1 )
+text = "NEXT"
+flat = true
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 497.0
+margin_right = 1720.0
+margin_bottom = 580.0
+
+[node name="ExitToMainMenu" type="Button" parent="VBoxContainer/CenterContainer"]
+margin_left = 748.0
+margin_right = 972.0
+margin_bottom = 83.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+custom_styles/focus = SubResource( 2 )
+custom_fonts/font = ExtResource( 1 )
+text = "Exit"
+flat = true
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/RestartBut" to="." method="_on_RestartBut_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/NextBut" to="." method="_on_NextBut_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/ExitToMainMenu" to="." method="_on_ExitToMainMenu_pressed"]

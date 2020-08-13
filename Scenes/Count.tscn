@@ -1,0 +1,12 @@
+[gd_scene format=2]
+
+[node name="Node2D" type="TextEdit"]
+modulate = Color( 1, 1, 1, 0.611765 )
+self_modulate = Color( 1, 1, 1, 0.521569 )
+margin_left = 1.46302
+margin_top = 0.487675
+margin_right = 65.463
+margin_bottom = 32.4877
+__meta__ = {
+"_edit_use_anchors_": false
+}

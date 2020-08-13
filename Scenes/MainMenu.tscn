@@ -1,0 +1,109 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Fonts/main_button_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Script/MainMenu.gd" type="Script" id=2]
+[ext_resource path="res://Fonts/joystix monospace.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 88
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[node name="MenuRect" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 640, 512 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.113725, 0.0705882, 0.121569, 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Margin" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 100.0
+margin_top = 250.0
+margin_right = -100.0
+margin_bottom = -150.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Margin"]
+margin_right = 1720.0
+margin_bottom = 680.0
+custom_constants/separation = 80
+
+[node name="HeaderLay" type="CenterContainer" parent="Margin/VBoxContainer"]
+margin_right = 1720.0
+margin_bottom = 106.0
+
+[node name="Header" type="Label" parent="Margin/VBoxContainer/HeaderLay"]
+margin_left = 312.0
+margin_right = 1407.0
+margin_bottom = 106.0
+custom_fonts/font = SubResource( 1 )
+text = "SLIDE AND PAINT"
+
+[node name="MenuItemsLay" type="CenterContainer" parent="Margin/VBoxContainer"]
+margin_top = 186.0
+margin_right = 1720.0
+margin_bottom = 575.0
+
+[node name="CenterContainer" type="CenterContainer" parent="Margin/VBoxContainer/MenuItemsLay"]
+margin_left = 642.0
+margin_right = 1078.0
+margin_bottom = 389.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Margin/VBoxContainer/MenuItemsLay/CenterContainer"]
+margin_right = 436.0
+margin_bottom = 389.0
+custom_constants/separation = 70
+
+[node name="NewGameBut" type="Button" parent="Margin/VBoxContainer/MenuItemsLay/CenterContainer/VBoxContainer"]
+margin_right = 436.0
+margin_bottom = 83.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+size_flags_stretch_ratio = 0.5
+custom_styles/focus = SubResource( 2 )
+custom_fonts/font = ExtResource( 1 )
+text = "NEW GAME"
+flat = true
+
+[node name="SettingsBut" type="Button" parent="Margin/VBoxContainer/MenuItemsLay/CenterContainer/VBoxContainer"]
+margin_top = 153.0
+margin_right = 436.0
+margin_bottom = 236.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+size_flags_stretch_ratio = 0.5
+custom_styles/focus = SubResource( 3 )
+custom_fonts/font = ExtResource( 1 )
+text = "SETTINGS"
+flat = true
+
+[node name="ExitBut" type="Button" parent="Margin/VBoxContainer/MenuItemsLay/CenterContainer/VBoxContainer"]
+margin_top = 306.0
+margin_right = 436.0
+margin_bottom = 389.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+size_flags_stretch_ratio = 0.5
+custom_styles/focus = SubResource( 4 )
+custom_fonts/font = ExtResource( 1 )
+text = "EXIT"
+flat = true
+[connection signal="pressed" from="Margin/VBoxContainer/MenuItemsLay/CenterContainer/VBoxContainer/NewGameBut" to="." method="_on_NewGameBut_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/MenuItemsLay/CenterContainer/VBoxContainer/SettingsBut" to="." method="_on_SettingsBut_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/MenuItemsLay/CenterContainer/VBoxContainer/ExitBut" to="." method="_on_ExitBut_pressed"]

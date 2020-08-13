@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Script/PortalParticle.gd" type="Script" id=1]
+[ext_resource path="res://Material/PortalParticle.tres" type="Material" id=2]
+
+[sub_resource type="RectangleShape2D" id=4]
+
+[node name="PortalParticle" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+amount = 30
+lifetime = 0.5
+visibility_rect = Rect2( -50, 0, 100, 100 )
+draw_order = 1
+process_material = ExtResource( 2 )
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 0, 10 )
+shape = SubResource( 4 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
