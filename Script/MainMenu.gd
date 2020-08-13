@@ -1,6 +1,7 @@
 extends ColorRect
-onready var GameManager = preload("res://Scenes/test.tscn")
 var GameInstance
+onready var GameManager = preload("res://Scenes/test.tscn")
+
 
 func _ready():
 	#hide()
@@ -10,12 +11,12 @@ func _ready():
 func _on_NewGameBut_pressed():
 	get_tree().change_scene("res://Scenes/test.tscn")
 	#if(GameInstance == null):
-		#GameInstance = GameManager.instance()
-		#PlayerInstance.set_position(Vector2(map.map_to_world(startPos).x + mapOfset * cellSize + cellSize /2 ,map.map_to_world(startPos).y + mapOfset* cellSize + cellSize/2))
-		#self.add_child(GameInstance)
-		#hide()
+	#GameInstance = GameManager.instance()
+	#PlayerInstance.set_position(Vector2(map.map_to_world(startPos).x + mapOfset * cellSize + cellSize /2 ,map.map_to_world(startPos).y + mapOfset* cellSize + cellSize/2))
+	#self.add_child(GameInstance)
+	#hide()
 	#else:
-		#PlayerInstance.set_position(Vector2(map.map_to_world(startPos).x + mapOfset * cellSize + cellSize /2 ,map.map_to_world(startPos).y + mapOfset* cellSize + cellSize/2))
+	#PlayerInstance.set_position(Vector2(map.map_to_world(startPos).x + mapOfset * cellSize + cellSize /2 ,map.map_to_world(startPos).y + mapOfset* cellSize + cellSize/2))
 
 
 func _on_SettingsBut_pressed():

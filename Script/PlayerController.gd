@@ -1,36 +1,19 @@
 extends KinematicBody2D
 export (int) var speed = 1500
-#export (TileMap) var tileMap = get_tree().get_root().get_node("TileMap")
-onready var tileMap = get_tree().get_root().find_node("Map", true, false)
-onready var Global = get_tree().get_root().find_node("Global", true, false)
-onready var Utils = preload("res://Script/Utils.gd").new()
+
+export (float, 1.0, 1.5) var MAX_DIAGONAL_SLOPE = 1.3
 var velocity = Vector2()
 var countMove = 0
 var allCell
-
-export (float, 1.0, 1.5) var MAX_DIAGONAL_SLOPE = 1.3
-onready var timer = $Timer
 var swipe_start_position = Vector2()
+onready var tileMap = get_tree().get_root().find_node("Map", true, false)
+onready var Global = get_tree().get_root().find_node("Global", true, false)
+onready var Utils = preload("res://Script/Utils.gd").new()
+onready var timer = $Timer
 
 
-func getMoveCount():
-	return countMove
-
-
-func moveX(dir):
-	Global.setCanMove(false)
-	$BlockStream.play()
-	countMove += 1
-	velocity.x = dir
-	velocity = velocity.normalized() * speed
-
-
-func moveY(dir):
-	Global.setCanMove(false)
-	$BlockStream.play()
-	countMove += 1
-	velocity.y = dir
-	velocity = velocity.normalized() * speed
+func _ready():
+	allCell = Global.getAllCell()
 
 
 func _input(event):
@@ -55,22 +38,6 @@ func _input(event):
 		var file = File.new()
 		file.open("user://{str}.txt".format({"str": OS.get_datetime()}), file.WRITE)
 		file.store_string(Global.getLevelData())
-		file.close()
-
-
-func _ready():
-	allCell = Global.getAllCell()
-
-
-func colorMap():
-	var tile_pos = tileMap.world_to_map(position)
-	var tile_id = tileMap.get_cellv(tile_pos)
-	if tile_id == 2:
-		tileMap.set_cellv(tile_pos, 3)
-		allCell -= 1
-		if allCell == 0:
-			Global.setCanMove(false)
-			Global.showEndLevelPopup()
 
 
 func _physics_process(delta):
@@ -90,7 +57,37 @@ func _physics_process(delta):
 		position.x = Global.getMapOfset()
 	if position.y > Global.getHeight() - Global.getMapOfset():
 		$PortalStream.play()
-		position.y = Global.getMapOfset()
+
+
+func getMoveCount():
+	return countMove
+
+
+func moveX(dir):
+	Global.setCanMove(false)
+	$BlockStream.play()
+	countMove += 1
+	velocity.x = dir
+	velocity = velocity.normalized() * speed
+
+
+func moveY(dir):
+	Global.setCanMove(false)
+	$BlockStream.play()
+	countMove += 1
+	velocity.y = dir
+	velocity = velocity.normalized() * speed
+
+
+func colorMap():
+	var tile_pos = tileMap.world_to_map(position)
+	var tile_id = tileMap.get_cellv(tile_pos)
+	if tile_id == 2:
+		tileMap.set_cellv(tile_pos, 3)
+		allCell -= 1
+		if allCell == 0:
+			Global.setCanMove(false)
+			Global.showEndLevelPopup()
 
 
 func _start_detection(position):

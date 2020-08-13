@@ -1,5 +1,6 @@
 extends ColorRect
 
+
 func _ready():
 	$Margin/VBoxContainer/MenuItemsLay/CenterContainer/VBoxContainer/VBoxContainer2/HSlider.value = GlobalVars.get_difficalty()
 

@@ -3,8 +3,8 @@ const Player = preload("res://Scenes/Player.tscn")
 const Text = preload("res://Scenes/Text.tscn")
 const CountText = preload("res://Scenes/Count.tscn")
 const PortalParticle = preload("res://Scenes/PortalParticle.tscn")
-const maxX = int(round(OS.window_size.x)) #1280
-const maxY = int(round(OS.window_size.y)) #1024
+const maxX = int(round(OS.window_size.x))
+const maxY = int(round(OS.window_size.y))
 var difficalty = GlobalVars.get_difficalty()
 const mapOfset = 2
 var timeStart = 0
@@ -275,13 +275,12 @@ func generateMap(pos : Vector2, dir : int, count: int):
 				yy += 1
 				b = i
 				break
-			matrix[pos.x][yy] = 2#5
+			matrix[pos.x][yy] = 2
 		if(yy > pos.y):
 			matrix[pos.x][0] = Tiles.PU
 			matrix[pos.x][tileH-1] = Tiles.PD
 		matrix[pos.x][yy-1] = 11
 		matrixW[pos.x] = 1
-		#addText(pos.x,yy - 1)
 		generateMap(Vector2(pos.x,yy),rng.randi_range(2,3),count-b)
 		
 	elif(dir == 2):
@@ -298,7 +297,7 @@ func generateMap(pos : Vector2, dir : int, count: int):
 				xx -= 1
 				b = i
 				break
-			matrix[xx][pos.y] = 2#5
+			matrix[xx][pos.y] = 2
 		if(xx < pos.x):
 			matrix[0][pos.y] = Tiles.PL
 			matrix[tileW-1][pos.y] = Tiles.PR
@@ -320,7 +319,7 @@ func generateMap(pos : Vector2, dir : int, count: int):
 				xx += 1
 				b = i
 				break
-			matrix[xx][pos.y] = 2#5
+			matrix[xx][pos.y] = 2
 		if(xx > pos.x):
 			matrix[0][pos.y] = Tiles.PL
 			matrix[tileW - 1][pos.y] = Tiles.PR
