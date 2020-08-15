@@ -1,33 +1,25 @@
-extends Node2D
-const Player = preload("res://Scenes/Player.tscn")
-const Text = preload("res://Scenes/Text.tscn")
-const CountText = preload("res://Scenes/Count.tscn")
+extends Node
+
+
 const PortalParticle = preload("res://Scenes/PortalParticle.tscn")
 const maxX = int(round(OS.window_size.x))
 const maxY = int(round(OS.window_size.y))
-var difficalty = GlobalVars.get_difficalty()
-const mapOfset = 2
-var timeStart = 0
-onready var levelTime = 0
-onready var levelAllCell = 0
-onready var canMove = false
-var rng = RandomNumberGenerator.new()
-onready var map = $Map
-onready var gui = $Camera2D/GUI
-onready var cam = $Camera2D
-var PlayerInstance
+var height = maxY
+var width = maxX
+
 var matrix = []
 var matrixW = []
 var matrixH = []
 var cellSize = 32
-var height = maxY
-var width = maxX
+var player
+onready var levelAllCell = 0
+var difficalty = GlobalVars.get_difficalty()
+var rng = RandomNumberGenerator.new()
+
+var startPos
+const mapOfset = 2
 var tileW = width / cellSize - 2 * mapOfset
 var tileH = height / cellSize - 2 * mapOfset
-var startPos
-var GlobInd = 0
-var recursiveCount = 0
-
 
 enum Tiles{
 	LU = 12
@@ -51,73 +43,31 @@ enum Tiles{
 	PL = 31
 	E = -1
 }
+func getLevelStartPos():
+	return startPos
 
+func getLevel():
+	return matrix
 
+	
 func getWidth():
 	return width
+
 func getHeight():
 	return height
+
 func getMapOfset():
 	return mapOfset * cellSize
-func getTime():
-	return levelTime
+
+func _ready():
+	pass
+
 func getAllCell():
 	return levelAllCell - 1
-func getMoveCount():
-	return PlayerInstance.getMoveCount()
-func getCanMove():
-	return canMove
-func setCanMove(isMove: bool):
-	canMove = isMove
-	
-func _ready():
-	startLevel(null,null,false)
-	cam.set_position(Vector2(OS.window_size.x/2,OS.window_size.y/2))
-	
-func startLevel(level ,start_pos,restart):
-	timeStart = OS.get_unix_time()
-	if(level != null):
-		matrix = level
-	else:
-		for x in range(tileW):
-			matrix.append([])
-			matrixW.append(0)
-			for y in range(tileH):
-				matrix[x].append(1)
-		for y in range(tileH):
-			matrixH.append(0)
-	rng.randomize()
-	
-	var startPosX = rng.randi_range(2,tileW - 2)
-	var startPosY = rng.randi_range(2,tileH - 2)
-	startPos = Vector2(startPosX,startPosY)
-	if(start_pos != null):
-		startPos = start_pos
-	print(tileW,"!!!!",tileH)
-	print(OS.window_size.x,"!!!!",OS.window_size.y, "____", OS.get_screen_dpi())
-	matrix[startPos.x][startPos.y] = 2
-	if(!restart):
-		generateMap(startPos,rng.randi_range(0,3),difficalty)
-	fillMap()
 
-	if(PlayerInstance == null):
-		PlayerInstance = Player.instance()
-		print(startPos, "___", map.map_to_world(startPos))
-		PlayerInstance.set_position(Vector2(map.map_to_world(startPos).x + mapOfset * cellSize + cellSize /2 ,map.map_to_world(startPos).y + mapOfset* cellSize + cellSize/2))
-		self.add_child(PlayerInstance)
-	else:
-		PlayerInstance.set_position(Vector2(map.map_to_world(startPos).x + mapOfset * cellSize + cellSize /2 ,map.map_to_world(startPos).y + mapOfset* cellSize + cellSize/2))
-	print(startPos)
-	
-func loadNextLevel():
-	get_tree().reload_current_scene()
+func getStartPos():
+	return Vector2(map.map_to_world(startPos).x + mapOfset * cellSize + cellSize /2 ,map.map_to_world(startPos).y + mapOfset* cellSize + cellSize/2)
 
-func _process(delta):
-	var timeNow = OS.get_unix_time()
-	var elapsed = timeNow - timeStart
-	var minutes = elapsed / 60
-	var seconds = elapsed % 60
-	levelTime = "%02d : %02d" % [minutes, seconds]
 func getLevelData():
 	var data = ""
 	data += "tileW: %d \n" % tileW
@@ -128,13 +78,9 @@ func getLevelData():
 			data += "|%d|" % matrix[x][y]
 		data += "\n"
 	return data
-func getLevel():
-	return matrix
-func getLevelStartPos():
-	return startPos
 
-func showEndLevelPopup():
-	gui.showEndLevelPopup(getTime(),getMoveCount())
+func genMap(level,start_pos):
+
 
 func fillMap():
 	for x in range(0,tileW):
@@ -225,17 +171,17 @@ func getTileId(x : int, y : int):
 		return Tiles.U
 	return Tiles.E
 
-func addText(x: int, y: int):
-	var TextInd = Text.instance()
-	TextInd.text = GlobInd as String
-	GlobInd += 1
-	TextInd.set_position(map.map_to_world(Vector2(x,y)))
-	self.add_child(TextInd)
-func addCount():
-	var CountInd = CountText.instance()
-	CountInd.text = levelAllCell as String
-	CountInd.set_position(map.map_to_world(Vector2(0,0)))
-	self.add_child(CountInd)
+#func addText(x: int, y: int):
+#	var TextInd = Text.instance()
+#	TextInd.text = GlobInd as String
+#	GlobInd += 1
+#	TextInd.set_position(map.map_to_world(Vector2(x,y)))
+#	self.add_child(TextInd)
+#func addCount():
+#	var CountInd = CountText.instance()
+#	CountInd.text = levelAllCell as String
+#	CountInd.set_position(map.map_to_world(Vector2(0,0)))
+#	self.add_child(CountInd)
 func generateMap(pos : Vector2, dir : int, count: int):
 	if(count < 1):
 		return

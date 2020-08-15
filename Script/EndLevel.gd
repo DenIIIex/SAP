@@ -6,12 +6,13 @@ func _ready():
 
 func _on_RestartBut_pressed():
 	Global.startLevel(Global.getLevel(),Global.getLevelStartPos(),true)
-	Global.setCanMove(true)
+	GlobalVars.set_block_move(false)
 	hide()
 
 
 func _on_NextBut_pressed():
 	Global.loadNextLevel()
+	GlobalVars.set_block_move(false)
 	hide()
 	
 

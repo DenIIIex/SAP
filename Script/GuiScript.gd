@@ -22,7 +22,7 @@ func showEndLevelPopup(time: String, moveCount: int):
 	timeLabel.text = "TIME " + time
 	countLabel.text = "STEPS " + moveCount as String
 	endLevel.set_visible(true)
-	Global.setCanMove(false)
+	GlobalVars.set_block_move(true)
 
 
 func _on_MenuBut_pressed():

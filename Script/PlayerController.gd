@@ -4,6 +4,7 @@ export (int) var speed = 1500
 export (float, 1.0, 1.5) var MAX_DIAGONAL_SLOPE = 1.3
 var velocity = Vector2()
 var countMove = 0
+var is_moving = false
 var allCell
 var swipe_start_position = Vector2()
 onready var tileMap = get_tree().get_root().find_node("Map", true, false)
@@ -13,23 +14,25 @@ onready var timer = $Timer
 
 
 func _ready():
+	var tile_pos = tileMap.world_to_map(position)
+	tileMap.set_cellv(tile_pos, 3)
 	allCell = Global.getAllCell()
 
 
 func _input(event):
-	if Global.getCanMove():
+	if !is_moving and !GlobalVars.get_block_move():
 		if event is InputEventScreenTouch:
 			if event.pressed:
 				_start_detection(event.position)
 			elif not timer.is_stopped():
 				_end_detection(event.position)
-		if Input.is_action_just_pressed('ui_right'):
+		if Input.is_action_just_pressed('ui_right') and !$rayR.is_colliding():
 			moveX(1)
-		if Input.is_action_just_pressed('ui_left'):
+		if Input.is_action_just_pressed('ui_left') and !$rayL.is_colliding():
 			moveX(-1)
-		if Input.is_action_just_pressed('ui_down'):
+		if Input.is_action_just_pressed('ui_down') and !$rayD.is_colliding():
 			moveY(1)
-		if Input.is_action_just_pressed('ui_up'):
+		if Input.is_action_just_pressed('ui_up') and !$rayU.is_colliding():
 			moveY(-1)
 
 	if Input.is_action_just_pressed("reload"):
@@ -42,9 +45,9 @@ func _input(event):
 
 func _physics_process(delta):
 	velocity = move_and_slide(velocity)
-	if ! Global.getCanMove():
+	if is_moving:
 		colorMap()
-	Global.setCanMove(velocity.x == 0 and velocity.y == 0)
+	is_moving = velocity.x != 0 or velocity.y != 0
 
 	if position.y < Global.getMapOfset():
 		$PortalStream.play()
@@ -65,7 +68,7 @@ func getMoveCount():
 
 
 func moveX(dir):
-	Global.setCanMove(false)
+	is_moving = true
 	$BlockStream.play()
 	countMove += 1
 	velocity.x = dir
@@ -73,7 +76,7 @@ func moveX(dir):
 
 
 func moveY(dir):
-	Global.setCanMove(false)
+	is_moving = true
 	$BlockStream.play()
 	countMove += 1
 	velocity.y = dir
@@ -87,7 +90,7 @@ func colorMap():
 		tileMap.set_cellv(tile_pos, 3)
 		allCell -= 1
 		if allCell == 0:
-			Global.setCanMove(false)
+			GlobalVars.set_block_move(true)
 			Global.showEndLevelPopup()
 
 

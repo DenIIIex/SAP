@@ -22,19 +22,23 @@ scale = Vector2( 1.575, 1.595 )
 shape = SubResource( 1 )
 
 [node name="rayD" type="RayCast2D" parent="."]
-cast_to = Vector2( 0, 15 )
+enabled = true
+cast_to = Vector2( 0, 20 )
 collision_mask = 1025
 
 [node name="rayU" type="RayCast2D" parent="."]
-cast_to = Vector2( 0, -15 )
-collision_mask = 1025
+enabled = true
+cast_to = Vector2( 0, -20 )
+collision_mask = 2147484673
 
 [node name="rayL" type="RayCast2D" parent="."]
-cast_to = Vector2( -15, 0 )
+enabled = true
+cast_to = Vector2( -20, 0 )
 collision_mask = 1025
 
 [node name="rayR" type="RayCast2D" parent="."]
-cast_to = Vector2( 15, 0 )
+enabled = true
+cast_to = Vector2( 20, 0 )
 collision_mask = 1025
 
 [node name="BlockStream" type="AudioStreamPlayer2D" parent="."]
