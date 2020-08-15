@@ -57,6 +57,7 @@ func _physics_process(delta):
 		position.x = Global.getMapOfset()
 	if position.y > Global.getHeight() - Global.getMapOfset():
 		$PortalStream.play()
+		position.y = Global.getMapOfset()
 
 
 func getMoveCount():
