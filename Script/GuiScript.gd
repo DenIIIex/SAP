@@ -11,7 +11,7 @@ func _ready():
 	$PopupCtrl.set_size(Vector2(OS.window_size.x, OS.window_size.y))
 
 
-func _process(delta):
+func _process(_delta):
 	timeGuiLabel.text = "TIME :" + Global.getTime()
 	countGuiLabel.text = "STEPS :" + Global.getMoveCount() as String
 	pass
@@ -26,4 +26,4 @@ func showEndLevelPopup(time: String, moveCount: int):
 
 
 func _on_MenuBut_pressed():
-	get_tree().change_scene("res://Scenes/MainMenu.tscn")
+	var _res = get_tree().change_scene("res://Scenes/MainMenu.tscn")

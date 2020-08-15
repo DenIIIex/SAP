@@ -18,4 +18,4 @@ func _on_NextBut_pressed():
 
 
 func _on_ExitToMainMenu_pressed():
-	get_tree().change_scene("res://Scenes/MainMenu.tscn")
+	var _res = get_tree().change_scene("res://Scenes/MainMenu.tscn")

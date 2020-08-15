@@ -6,7 +6,7 @@ func _ready():
 
 
 func _on_Button_pressed():
-	get_tree().change_scene("res://Scenes/MainMenu.tscn")
+	var _res = get_tree().change_scene("res://Scenes/MainMenu.tscn")
 
 
 func _on_HSlider_value_changed(value):

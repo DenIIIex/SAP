@@ -9,7 +9,6 @@ var allCell
 var swipe_start_position = Vector2()
 onready var tileMap = get_tree().get_root().find_node("Map", true, false)
 onready var Global = get_tree().get_root().find_node("Global", true, false)
-onready var Utils = preload("res://Script/Utils.gd").new()
 onready var timer = $Timer
 
 
@@ -43,7 +42,7 @@ func _input(event):
 		file.store_string(Global.getLevelData())
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	velocity = move_and_slide(velocity)
 	if is_moving:
 		colorMap()

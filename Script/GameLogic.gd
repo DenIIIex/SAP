@@ -82,9 +82,9 @@ func startLevel(level ,start_pos,restart):
 		for x in range(tileW):
 			matrix.append([])
 			matrixW.append(0)
-			for y in range(tileH):
+			for _y in range(tileH):
 				matrix[x].append(1)
-		for y in range(tileH):
+		for _y in range(tileH):
 			matrixH.append(0)
 	rng.randomize()
 	
@@ -110,9 +110,10 @@ func startLevel(level ,start_pos,restart):
 	print(startPos)
 	
 func loadNextLevel():
-	get_tree().reload_current_scene()
+	var _res = get_tree().reload_current_scene()
+	
 
-func _process(delta):
+func _process(_delta):
 	var timeNow = OS.get_unix_time()
 	var elapsed = timeNow - timeStart
 	var minutes = elapsed / 60
@@ -241,7 +242,7 @@ func generateMap(pos : Vector2, dir : int, count: int):
 		return
 	if(dir == 0):
 		var yy = 0
-		var b =  getOfset(pos, dir, 1, tileH-3)
+		var b =  getOfset(pos, dir)
 		if(b == null or b < 0):
 			print("ERROR")
 			return
@@ -263,7 +264,7 @@ func generateMap(pos : Vector2, dir : int, count: int):
 		
 	elif(dir == 1):
 		var yy = 0
-		var b = getOfset(pos, dir, 1, tileH - 3) 
+		var b = getOfset(pos, dir) 
 		if(b == null or b < 0):
 			print("ERROR")
 			return
@@ -285,7 +286,7 @@ func generateMap(pos : Vector2, dir : int, count: int):
 		
 	elif(dir == 2):
 		var xx = 0
-		var b = getOfset(pos, dir, 1, tileW - 3)
+		var b = getOfset(pos, dir)
 		if(b == null or b < 0):
 			print("ERROR")
 			return
@@ -307,7 +308,7 @@ func generateMap(pos : Vector2, dir : int, count: int):
 		
 	elif(dir == 3):
 		var xx = 0
-		var b = getOfset(pos, dir, 1, tileW - 3)
+		var b = getOfset(pos, dir)
 		if(b == null or b < 0):
 			print("ERROR")
 			return
@@ -326,7 +327,7 @@ func generateMap(pos : Vector2, dir : int, count: int):
 		matrix[xx-1][pos.y] = 11
 		generateMap(Vector2(xx,pos.y),rng.randi_range(0, 1),count - b)
 		
-func getOfset(pos: Vector2, dir : int, start : int, end :int):
+func getOfset(pos: Vector2, dir : int):
 	var ofsetArray = []
 	var ofset = 0
 	if(dir == 0):
